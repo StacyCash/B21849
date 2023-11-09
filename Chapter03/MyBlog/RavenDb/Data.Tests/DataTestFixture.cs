@@ -41,8 +41,6 @@ public class DataTestFixture : IAsyncLifetime
         });
         services.AddScoped<IBlogApi, BlogApiRavenDbDirectAccess>();
 
-
-
         var provider = services.BuildServiceProvider();
         Api = provider.GetService<IBlogApi>()!;
         await Task.CompletedTask;

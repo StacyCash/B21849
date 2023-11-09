@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-rtm.23523.3" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0-rtm.23523.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-rc.2.23479.6" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
     <PackageReference Include="RavenDB.Client" Version="6.0.0" />
