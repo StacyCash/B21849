@@ -106,9 +106,11 @@ public class BlogApiJsonDirectAccess : IBlogApi
         return await Task.FromResult(list.FirstOrDefault(bp => bp.Id == id));
     }
 
-   
-
-
+    public async Task<List<Comment>> GetCommentsAsync(string blogPostId)
+    {
+        var list = Load<Comment>(_settings.CommentsFolder);
+        return await Task.FromResult(list.Where(t => t.BlogPostId == blogPostId).ToList());
+    }
 
     public async Task<BlogPost?> SaveBlogPostAsync(BlogPost item)
     {
@@ -136,7 +138,6 @@ public class BlogApiJsonDirectAccess : IBlogApi
         await SaveAsync(_settings.CommentsFolder, item.Id, item);
         return item;
     }
-
 
 
     public async Task DeleteBlogPostAsync(string id)
@@ -179,9 +180,5 @@ public class BlogApiJsonDirectAccess : IBlogApi
         return Task.CompletedTask;
     }
 
-    public async Task<List<Comment>> GetCommentsAsync(string blogPostId)
-    {
-        var list = Load<Comment>(_settings.CommentsFolder);
-        return await Task.FromResult(list.Where(t => t.BlogPostId == blogPostId).ToList());
-    }
+
 }
