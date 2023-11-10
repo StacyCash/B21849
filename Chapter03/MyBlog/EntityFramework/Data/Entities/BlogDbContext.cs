@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Entities;
 
@@ -22,12 +23,22 @@ public class BlogDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Define the many-to-many relationship between BlogPost and Tag
+modelBuilder.Entity<BlogPost>().HasMany(b => b.Tags);
+        modelBuilder.Entity<BlogPost>().HasOne(b => b.Category);
         modelBuilder.Entity<BlogPost>()
-            .HasMany(b => b.Tags)
-            .WithMany(t => t.BlogPosts)
-            .UsingEntity(j => j.ToTable("BlogPostTags")); // Join table for many-to-many
+            .Property(record => record.Id)
+            .HasDefaultValueSql("NEWID()");
 
-        // Other model configurations can be placed here
+        modelBuilder.Entity<Tag>()
+            .Property(record => record.Id)
+            .HasDefaultValueSql("NEWID()");
+
+        modelBuilder.Entity<Category>()
+            .Property(record => record.Id)
+            .HasDefaultValueSql("NEWID()");
+
+       modelBuilder.Entity<Comment>()
+            .Property(record => record.Id)
+            .HasDefaultValueSql("NEWID()");
     }
 }
