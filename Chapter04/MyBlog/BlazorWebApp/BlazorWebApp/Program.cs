@@ -1,7 +1,7 @@
-using BlazorWebApp.Client.Pages;
-using BlazorWebApp.Components;
 using Data;
 using Data.Models.Interfaces;
+using BlazorWebApp.Client.Pages;
+using BlazorWebApp.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options =>
 {
-    options.DataPath = @"..\..\..\Data\";
+    options.DataPath = @"..\..\..\..\Data\";
     options.BlogPostsFolder = "Blogposts";
     options.TagsFolder = "Tags";
     options.CategoriesFolder = "Categories";
@@ -44,6 +44,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Counter).Assembly);
+    .AddAdditionalAssemblies(typeof(Counter).Assembly)
+    .AddAdditionalAssemblies(typeof(SharedComponents.Home).Assembly);
 
 app.Run();
