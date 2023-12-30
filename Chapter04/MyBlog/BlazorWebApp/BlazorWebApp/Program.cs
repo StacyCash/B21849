@@ -16,7 +16,7 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options 
     options.BlogPostsFolder = "Blogposts";
     options.TagsFolder = "Tags";
     options.CategoriesFolder = "Categories";
-    options.CategoriesFolder = "Comments";
+    options.CommentsFolder = "Comments";
 });
 
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();

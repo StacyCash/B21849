@@ -396,4 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/Chapter08/MyBlog/BlazorWebApp/BlazorWebApp/appsettings.local.json
+*.local.json
