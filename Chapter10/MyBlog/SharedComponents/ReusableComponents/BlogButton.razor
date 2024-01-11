@@ -1,10 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
+@inject IJSRuntime jsRuntime
 
 <button type="@InternalButtonType" disabled="@Disabled" class="@InternalCssClass" title="@Title" @onclick="OnButtonClick">@ChildContent</button>
 
 
 @code
 {
+    IJSObjectReference jsmodule;
+    [Parameter]
+    public string? ConfirmMessage { get; set; } = null;
+    private async Task<bool> ShouldExecute()
+    {
+        if (ConfirmMessage != null)
+        {
+            jsmodule = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "/_content/SharedComponents/ReusableComponents/BlogButton.razor.js");
+            return await jsmodule.InvokeAsync<bool>("showConfirm", ConfirmMessage);
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     [CascadingParameter]
     public required EditContext EditContext { get; set; }
 
@@ -61,14 +78,15 @@
 
     private async Task OnButtonClick(EventArgs args)
     {
-        if (OnClick.HasDelegate)
+        if (OnClick.HasDelegate && await ShouldExecute())
         {
             await OnClick.InvokeAsync(args);
         }
+
     }
 
     private string InternalButtonType => OnClick.HasDelegate ? "button" : "submit";
-    
+
     [Parameter] public ButtonType Type { get; set; }
 
     private string InternalCssClass

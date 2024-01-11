@@ -1,5 +1,4 @@
-﻿<CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Client._Imports).Assembly,typeof(SharedComponents.Pages.Home).Assembly }">
+﻿    <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Client._Imports).Assembly,typeof(SharedComponents.Pages.Home).Assembly }">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <Authorizing>
@@ -19,4 +18,3 @@
             </LayoutView>
         </NotFound>
     </Router>
-</CascadingAuthenticationState>

@@ -4,7 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	<NoWarn>$(NoWarn);NU1605</NoWarn>
+	  <NoWarn>$(NoWarn);NU1605</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
 

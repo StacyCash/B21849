@@ -6,6 +6,8 @@ using BlazorWebApp.Endpoints;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Components.Authorization;
+using BlazorWebApp;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +29,9 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options 
 });
 
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
+
+builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
+builder.Services.AddCascadingAuthenticationState();
 
 builder.Services
     .AddAuth0WebAppAuthentication(options =>

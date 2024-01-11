@@ -46,7 +46,7 @@
             await _api.DeleteTagAsync(tag.Id!);
             Items.Remove(tag);
         }
-        catch { }
+        catch (Exception ex){ }
     }
     private async Task Save()
     {

@@ -1,7 +1,6 @@
 ﻿@page "/admin/tags"
 @* @rendermode InteractiveServer *@
-@* @rendermode InteractiveWebAssembly *@
-@rendermode InteractiveAuto
+@rendermode InteractiveWebAssembly
 @using Data.Models
 @using Data.Models.Interfaces
 
@@ -10,7 +9,6 @@
 @inject IBlogApi _api
 @attribute [Authorize]
 <h3>Tags</h3>
-
 
 <EditForm OnValidSubmit="Save" Model="Item">
     <DataAnnotationsValidator />
