@@ -2,6 +2,12 @@
 @using Data.Models.Interfaces
 @using Data.Models
 @using Markdig;
+@using SharedComponents.Interfaces
+@* @rendermode InteractiveServer *@
+@rendermode InteractiveWebAssembly
+@inject IBlogNotificationService _notificationService
+@implements IDisposable
+
 @inject IBlogApi _api
 @inject NavigationManager _navman
 
@@ -25,6 +31,20 @@
 
 @code
 {
+    void IDisposable.Dispose()
+    {
+        _notificationService.BlogPostChanged -= PostChanged;
+    }
+
+    private async void PostChanged(BlogPost post)
+    {
+        if (BlogPost?.Id == post.Id)
+        {
+            BlogPost = post;
+            await InvokeAsync(() => this.StateHasChanged());
+        }
+    }
+
     [Parameter]
     public string BlogPostId { get; set; }
     public BlogPost? BlogPost { get; set; }
@@ -38,6 +58,7 @@
     MarkdownPipeline pipeline;
     protected override Task OnInitializedAsync()
     {
+        _notificationService.BlogPostChanged += PostChanged;
         pipeline = new MarkdownPipelineBuilder()
                  .UseEmojiAndSmiley()
                  .Build();

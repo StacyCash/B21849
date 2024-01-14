@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
 using BlazorWebApp;
 using BlazorWebApp.Client;
+using SharedComponents.Interfaces;
+using BlazorWebApp.Services;
+using BlazorServer.Services;
+using BlazorWebApp.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +23,8 @@ builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, relo
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddScoped<IBrowserStorage, BlogProtectedBrowserStorage>();
 
 builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options =>
 {
@@ -32,6 +38,8 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options 
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddSingleton<IBlogNotificationService, BlazorServerBlogNotificationService>();
+builder.Services.AddSignalR();
 builder.Services
     .AddAuth0WebAppAuthentication(options =>
     {
@@ -61,6 +69,8 @@ app.UseAntiforgery();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<BlogNotificationHub>("/BlogNotificationHub");
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
